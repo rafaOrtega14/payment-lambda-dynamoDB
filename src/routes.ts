@@ -34,11 +34,15 @@ app.post('/payments',async (req: Request, res: Response) => {
     currency,
     amount,
   };
-await client.put({
-    TableName: 'Payments',
-    Item: payment,
-  });
-  res.status(201).json(payment);
+  try {
+    await client.put({
+      TableName: 'Payments',
+      Item: payment,
+    });
+    res.status(201).json(payment);
+  } catch(e) {
+    res.status(500).send(e)
+  }
 });
 
 export default app;

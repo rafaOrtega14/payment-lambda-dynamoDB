@@ -24,12 +24,15 @@ app.post('/payments', async (req, res) => {
         currency,
         amount,
     };
-    await client.put({
-        TableName: 'Payments',
-        Item: payment,
-    });
-    // Here you would typically store the payment data in a database
-    // For simplicity, we will just return the payment data as a response
-    res.status(201).json(payment);
+    try {
+        await client.put({
+            TableName: 'Payments',
+            Item: payment,
+        });
+        res.status(201).json(payment);
+    }
+    catch (e) {
+        res.status(500).send(e);
+    }
 });
 exports.default = app;
