@@ -1,0 +1,15 @@
+service: nodejs-aws-lambda
+provider:
+  name: aws
+  runtime: nodejs18.x
+functions:
+  app:
+    handler: dist/serverless.handler
+    events:
+      - http: ANY /
+  createPayment:
+    handler: dist/serverless.handler
+    events:
+      - http: 'POST /payments'
+plugins:
+  - serverless-offline
